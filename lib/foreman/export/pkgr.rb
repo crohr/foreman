@@ -4,7 +4,8 @@ require "foreman/export"
 class Foreman::Export::Pkgr < Foreman::Export::Base
 
   def export
-    super
+    error("Must specify a location") unless location
+    FileUtils.mkdir_p(location) rescue error("Could not create: #{location}")
 
     Dir["#{location}/#{app}*.conf"].each do |file|
       clean file
