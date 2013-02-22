@@ -6,6 +6,20 @@ class Foreman::Export::Pkgr < Foreman::Export::Base
     error("Must specify a location") unless location
 
     inittab = []
+    inittab.push <<HEADER
+#
+### BEGIN INIT INFO
+# Provides:          #{app}
+# Required-Start:    $network $local_fs
+# Required-Stop:
+# Should-Start:      $named
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Launch #{app}
+### END INIT INFO
+#
+HEADER
     inittab << "# ----- pkgr #{app} processes -----"
 
     index = 1
