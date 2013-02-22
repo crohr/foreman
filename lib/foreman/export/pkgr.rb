@@ -50,6 +50,7 @@ HEADER
     else
       say "writing: #{location}"
       File.open(location, "w") { |file| file.puts inittab }
+      File.chmod(0755, location)
     end
   end
 
