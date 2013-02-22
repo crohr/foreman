@@ -10,15 +10,15 @@ class Foreman::Export::Pkgr < Foreman::Export::Base
       clean file
     end
 
-    write_template "pkgr/master.conf.erb", "#{app}.conf", binding
+    write_template "pkgr/master.conf.erb", "#{app}.upstart", binding
 
     engine.each_process do |name, process|
       next if engine.formation[name] < 1
-      write_template "pkgr/process_master.conf.erb", "#{app}-#{name}.conf", binding
+      write_template "pkgr/process_master.conf.erb", "#{app}-#{name}.upstart", binding
 
       1.upto(engine.formation[name]) do |num|
         port = engine.port_for(process, num)
-        write_template "pkgr/process.conf.erb", "#{app}-#{name}-#{num}.conf", binding
+        write_template "pkgr/process.conf.erb", "#{app}-#{name}-#{num}.upstart", binding
       end
     end
   end
